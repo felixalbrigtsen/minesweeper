@@ -1,0 +1,155 @@
+@charset "utf-8";
+
+body {
+	display: grid;
+	grid-template-columns: 1fr 5fr 2fr 2fr;
+	grid-template-rows: 1fr 7fr 6fr;
+	
+	background: rgb(175,175,175);
+	background: radial-gradient(circle, rgba(175,175,175,1) 0%, rgba(53,53,54,1) 100%);
+	
+	max-height: 100vh;
+}
+
+#helpOverlay {
+  display: none;
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  right: 0;
+  left: 0;
+  width: 100vw;
+  height: 200vh;
+  background-color: rgba(0,0,0,0.85);
+  cursor: pointer;
+  color: white;
+  text-align: center;
+
+}
+
+.helpText {
+  width: 60%;
+  margin: 0 auto;
+  font-size: 18px;
+}
+
+.helpTable {
+  display: inline-block;
+  color: white;
+  margin: 0 auto;
+  font-size: 18px;
+  padding: 10px;
+  border: 2px solid white;
+  height: 158px;
+}
+
+.helpTable > td {
+  padding-left: 10px;
+  padding-right: 10px;
+}
+
+#titleHead {
+	color: white;
+	font-size: 22px;
+	font-family: "Franklin Gothic Bold", "Arial Black", "sans-serif";
+	text-align: center;
+	margin: auto;
+	margin-bottom: 2%;
+	padding: 20px;
+
+	background-color: midnightblue;
+	width: 400px;
+	height: 70%;
+	border-radius: 10px;
+	
+}
+
+#gameDiv {
+	grid-column: 2 / 3;
+	grid-row: 2 / 3;
+	text-align: center;
+	margin: auto 0 600px auto;
+}
+
+#canvasDiv {
+	margin-top: 5px;
+}
+
+#leftPane {
+	grid-column: 3 / 4;
+	grid-row: 1 / 3;
+	
+	margin: 10px;
+	padding: 30px;
+	text-align: center;
+	border: 2px solid black;
+	border-radius: 10px;
+	background-color: whitesmoke;
+	
+	max-width: 200px;
+	height: 45%;
+	margin: 20% auto auto 5%;
+	
+}
+
+#timerText {
+	font-size: 26px;
+	border: 1px solid black;
+	border-radius: 5px;
+	padding: 10px 0px;
+}
+
+#bottomPadding {
+	grid-column: 1/3;
+	grid-row: 3/4;
+	height: 100%;
+}
+
+.paneBtn {
+	margin: 6px;
+	padding: 3px;
+	font-size: 16px;
+	width: 80%;
+
+}
+
+button {
+	border-radius: 4px;
+}
+
+
+@media (max-width: 750px) {
+	body {
+		grid-template-columns: 1fr 2fr;
+		grid-template-rows: 1fr 3fr;
+		max-height: none;
+	}
+	#gameDiv {
+		grid-column: 1 / 3;
+		grid-row: 1 / 2;
+		margin: 15px auto;
+
+	}
+	#leftPane {
+		grid-column: 1 / 3;
+		grid-row: 2 / 3;
+		float: center;
+		margin: 10px auto 0px auto;
+		min-width: 60%;
+		height: 600px;
+	}
+}
+
+
+
+
+/* Temporary */
+img {
+	padding-left: 10px;
+	padding-right: 10px;
+	padding-top: 4px;
+	padding-bottom: 4px;
+}
+
+
+

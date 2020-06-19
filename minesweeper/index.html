@@ -1,0 +1,195 @@
+<!doctype html>
+<html>
+<head>
+	<!-- Global site tag (gtag.js) - Google Analytics -->
+	<script async src="https://www.googletagmanager.com/gtag/js?id=UA-153522520-1"></script>
+	<script>
+	  window.dataLayer = window.dataLayer || [];
+	  function gtag(){dataLayer.push(arguments);}
+	  gtag('js', new Date());
+
+	  gtag('config', 'UA-153522520-1');
+	</script>
+
+	
+	<script language="javascript" type="text/javascript" src="libraries/p5.js"></script>
+	<script language="javascript" type="text/javascript" src="cell.js"></script>
+	<script language="javascript" type="text/javascript" src="ai.js"></script>
+	<script language="javascript" type="text/javascript" src="timer.js"></script>
+	
+	<meta charset="utf-8">
+	<title>Minesweeper</title>
+	<link href="style.css" rel="stylesheet" type="text/css">
+</head>
+
+<body>
+	<div id="gameDiv">
+    <h2 id="titleHead">Minesweeper.no</h2>
+		<span><button id="btn_new_0">Easy</button>
+      <button id="btn_new_1">Medium</button>
+      <button id="btn_new_2">Hard</button>
+      <button id="btn_new_3">Extreme</button></span>
+		<div id="canvasDiv"></div>
+	</div>
+	<div id="leftPane">
+		<button id="btn_start" class="paneBtn">Start Auto-Solve</button>
+      	<button id="btn_stop" class="paneBtn">Stop Auto-Solve</button>
+      	<button id="btn_step" class="paneBtn">Step Auto-Solve</button>
+		<br><br><br>
+		<button id="btn_help" class="paneBtn">Help</button>
+		<br><br><br>
+		<h2 id="timerText"></h2>
+		<br><br>
+		<p>Felix Albrigtsen</p>
+	</div>
+	
+	<script language="javascript" type="text/javascript" src="sketch.js"></script>
+
+	
+
+	<div id="helpOverlay">
+	<h1>Instructions</h1>
+	<br>
+	<p class="helpText">The game of minesweeper is a logical puzzle game with an element of chance.<br>
+	  Your goal is to "open" all cells, either by revealing them (clicking) or marking them (shift + click).<br>
+	  Some squares are mines/bombs, but most are safe to click. If you accidentally click a mine, the game is over.
+	  When you fail, all cells will be opened, and you must restart the game(See below).<br>
+	  If you click a square where no "neighbors", meaning the 8 squares directly touching it, are bombs, it will be blank
+	  and light gray. It will also reveal all it's neighbors. If a square has one or more neighbors that ARE bombs, they will
+	  display the number of explosive neighbors. You must use these numbers to find out what sqaures are safe.
+	  When you have successfully categorized all the squares as mines or safe, they will be marked in green, and you won.<br>
+	</p>
+	<br>
+	<h2>Inputs / Controls &nbsp &nbsp Difficulties</h2>
+	<div id="tableDiv">
+	  <table class="helpTable">
+		<thead>
+		  <th>Function</th>
+		  <th>Button</th>
+		</thead>
+		<tr>
+		  <td>Reveal</td>
+		  <td>W  or  Click</td>
+		</tr>
+		<tr>
+		  <td>Mark as unsafe</td>
+		  <td>Q  or  Shift + click </td>
+		</tr>
+		<tr>
+		  <td>Restart game</td>
+		  <td>R</td>
+		</tr>
+		<tr>
+			<td>Automatic / best move</td>
+			<td>A</td>
+		  </tr>
+		<tr>
+		  <td>Restart and change difficulty</td>
+		  <td>Buttons above the play field</td>
+		</tr>
+	  </table>
+
+	  <table class="helpTable">
+		<thead>
+		  <th>Difficulty</th>
+		  <th>Rows</th>
+		  <th>Columns</th>
+		  <th>Mines</th>
+		  <th>Mine percentage</th>
+		</thead>
+		<tr>
+		  <td>Easy</td>
+		  <td>10</td>
+		  <td>10</td>
+		  <td>10</td>
+		  <td>10%</td>
+		</tr>
+		<tr>
+		  <td>Medium</td>
+		  <td>16</td>
+		  <td>16</td>
+		  <td>38</td>
+		  <td>15%</td>
+		</tr>
+		<tr>
+		  <td>Hard</td>
+		  <td>16</td>
+		  <td>26</td>
+		  <td>83</td>
+		  <td>20%</td>
+		</tr>
+		<tr>
+		  <td>Extreme</td>
+		  <td>30</td>
+		  <td>36</td>
+		  <td>216</td>
+		  <td>20%</td>
+		</tr>
+	  </table>
+	</div>
+	<br>
+	<h2>Auto-Move info</h2>
+	<p class="helpText">
+	  This version of Minesweeper is equipped with an auto-move function. This "AI" software does not have access to any more information than the player does. 
+	  It can only see what cells are revealed, and the numbers inside the revealed cells. Using this data, it will try calculate the probability of each cell 
+	  being a mine, and mark/reveal it accordingly. It can make mistakes, as minesweeper also is a game of chance. Remember: Using the auto-move function will stop the timer!
+	</p>
+  </div>
+
+  <div id="bottomPadding">
+    <br>
+  </div>
+
+
+	<script>
+	document.getElementById("btn_new_0").onclick = function() {
+		if (refreshPage) {
+			window.location.href = window.location.pathname + "?d=0";
+		} else {
+			setDifficulty(0);
+		}
+	}
+	document.getElementById("btn_new_1").onclick = function() {
+	  	if (refreshPage) {
+			window.location.href = window.location.pathname + "?d=1";
+		} else {
+			setDifficulty(1);
+		}
+	}
+	document.getElementById("btn_new_2").onclick = function() {
+		if (refreshPage) {
+			window.location.href = window.location.pathname + "?d=2";
+		} else {
+			setDifficulty(2);
+		}
+	}
+	document.getElementById("btn_new_3").onclick = function() {
+	  	if (refreshPage) {
+			window.location.href = window.location.pathname + "?d=3";
+		} else {
+			setDifficulty(3);
+		}
+	} 
+
+	
+	document.getElementById("btn_start").onclick = function() {
+	  if (botTimer != undefined) { return; }
+	  botTimer = setInterval(autoMove, 700);
+	}
+	document.getElementById("btn_stop").onclick = function() {
+	  clearInterval(botTimer);
+	  botTimer = undefined;
+	}
+	document.getElementById("btn_step").onclick = function() {
+	  autoMove();
+	}
+	document.getElementById("btn_help").onclick = function() {
+	  document.getElementById("helpOverlay").style.display = "block";
+	}
+	document.getElementById("helpOverlay").onclick = function() {
+	  document.getElementById("helpOverlay").style.display = "none";
+	}
+  </script>
+
+</body>
+</html>
